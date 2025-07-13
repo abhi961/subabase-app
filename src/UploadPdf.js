@@ -20,12 +20,20 @@ export const uploadPdf = async () => {
   console.log(file, "File@@@@@@@@@@@@@@@@");
 
   try {
+    
     const fileInfo = await FileSystem.getInfoAsync(fileUri);
+    const fileSizeLimit = 5 * 1024 * 1024;
+    if(fileInfo.size > fileSizeLimit){
+      
+      Alert.alert('File Too Large", "Please select a file smaller than 5MB.')
+    
+    }
     const fileBlob = {
       uri: fileUri,
       name: fileName,
       type: "application/pdf",
     };
+    // console.log(fileInfo,"fileInfo---")
 
     const formData = new FormData();
     formData.append("uploads", fileBlob);
